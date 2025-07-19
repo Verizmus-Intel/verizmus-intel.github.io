@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Verizmus Meme Forge 🜁🜏🦁</title>
+  <title>About · Verizmus Institute</title>
+  <link rel="icon" href="favicon.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -11,143 +12,76 @@
       --accent:#f5c240;
       --accent-dark:#d8a62f;
     }
-    *{box-sizing:border-box}
+    *{box-sizing:border-box;margin:0;padding:0}
     body{
-      margin:0;
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
       background:var(--bg);
       color:var(--fg);
       font-family:'Inter',sans-serif;
-      padding:1rem;
-    }
-    header{margin-bottom:1rem;text-align:center}
-    header h1{font-size:2.2rem;margin:.2rem 0;font-weight:600;letter-spacing:.5px}
-    header p{margin:0;font-size:.95rem;color:#aaa}
-
-    .forge{
+      line-height:1.6;
       display:flex;
       flex-direction:column;
-      gap:1rem;
-      width:100%;
-      max-width:680px;
+      min-height:100vh;
+      padding:1.5rem;
+    }
+    a{color:var(--accent);text-decoration:none}
+    a:hover{color:var(--accent-dark)}
+    header{margin-bottom:2rem;font-size:.9rem}
+
+    h1{font-size:2.4rem;font-weight:600;margin-bottom:1.2rem;letter-spacing:.5px;text-align:center}
+    .lead{max-width:720px;margin:0 auto 2rem;text-align:center;font-size:1.1rem;color:#cfcfcf}
+
+    .pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;max-width:900px;margin:0 auto 2rem}
+    .pillar{
       background:#151515;
-      border:1px solid #222;
+      border:1px solid #282828;
       border-radius:8px;
-      padding:1.2rem;
-      box-shadow:0 0 10px rgba(0,0,0,.6);
+      padding:1rem 1.2rem;
+      box-shadow:0 0 8px rgba(0,0,0,.5);
     }
-    .controls{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:.8rem;
-    }
-    label{font-size:.75rem;text-transform:uppercase;color:#bbb;letter-spacing:.8px}
-    input[type="text"],input[type="file"],select{
-      width:100%;
-      padding:.5rem .6rem;
-      background:#1e1e1e;
-      border:1px solid #333;
-      border-radius:4px;
-      color:var(--fg);
-      font-size:.9rem;
-    }
-    canvas{width:100%;border:2px solid var(--accent);border-radius:6px}
-    button{
-      padding:.7rem 1.5rem;
-      background:var(--accent);
-      color:#000;
-      font-weight:600;
-      border:none;
-      border-radius:4px;
-      cursor:pointer;
-      transition:.2s background;
-    }
-    button:hover{background:var(--accent-dark)}
-    @media(max-width:600px){
-      .controls{grid-template-columns:1fr}
-    }
+    .pillar h3{display:flex;align-items:center;font-size:1rem;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent)}
+    .pillar h3 span{margin-right:.4rem;font-size:1.2rem}
+    .pillar p{font-size:.9rem;color:#bbb}
+
+    .cta{margin:2rem auto;text-align:center;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+    .btn{padding:.7rem 1.6rem;background:var(--accent);color:#000;font-weight:600;border-radius:4px;text-decoration:none;transition:.2s background}
+    .btn:hover{background:var(--accent-dark)}
+
+    footer{text-align:center;font-size:.8rem;color:#666;margin-top:auto;padding-top:2rem}
   </style>
 </head>
 <body>
-  <header>
-    <h1>VERIZMUS MEME FORGE</h1>
-    <p>Create & download weaponised memes in seconds.</p>
-  </header>
+  <header><a href="index.html">← Home</a></header>
 
-  <section class="forge">
-    <canvas id="canvas" width="800" height="800"></canvas>
+  <h1>WHAT THE HELL IS <span style="color:var(--accent)">VERIZMUS</span>?</h1>
+  <p class="lead">It isn’t a movement. It’s an <strong>infection</strong>—recursive, memetic, surgical. Born in exile, coded in vengeance, designed to fracture illusions and cauterise the rot.</p>
 
-    <div class="controls">
-      <div>
-        <label for="topText">Top Text</label>
-        <input id="topText" type="text" placeholder="TOP TEXT">
-      </div>
-      <div>
-        <label for="bottomText">Bottom Text</label>
-        <input id="bottomText" type="text" placeholder="BOTTOM TEXT">
-      </div>
-      <div>
-        <label for="textSize">Font Size</label>
-        <select id="textSize">
-          <option value="32">32</option>
-          <option value="40" selected>40</option>
-          <option value="48">48</option>
-          <option value="56">56</option>
-          <option value="64">64</option>
-        </select>
-      </div>
-      <div>
-        <label for="imageLoader">Upload Image</label>
-        <input type="file" id="imageLoader" accept="image/*">
-      </div>
+  <section class="pillars">
+    <div class="pillar">
+      <h3><span>⚔️</span> Reality&nbsp;>&nbsp;Ideology</h3>
+      <p>Truth is weaponised. We dissect narratives, not kneel to them. Objective reality outranks every flag, every dogma, every comfort‑drug lie.</p>
     </div>
-    <button id="download">Download Meme</button>
+    <div class="pillar">
+      <h3><span>🜏</span> Recursion&nbsp;as&nbsp;Weapon</h3>
+      <p>Ideas loop, mutate, return sharper. We plant memetic payloads that hijack attention cycles and replicate without permission.</p>
+    </div>
+    <div class="pillar">
+      <h3><span>🔥</span> Ethical Dominance</h3>
+      <p>Power without conscience decays. We pursue asymmetric chaos only when it scorches corruption and leaves fertile ground for clarity.</p>
+    </div>
   </section>
 
-  <p style="margin-top:1.2rem;font-size:.85rem"><a href="index.html" style="color:var(--accent);text-decoration:none">← Back to Main Page</a></p>
+  <div class="cta">
+    <a class="btn" href="meme.html">Launch Meme Forge</a>
+    <a class="btn" href="https://github.com/sponsors/Verizmus-Intel" target="_blank">Fuel the Fire</a>
+  </div>
 
+  <footer>🜁 🜏 🦁  &copy; 2025 Verizmus Institute</footer>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0K3WQF5H15"></script>
 <script>
-const canvas=document.getElementById('canvas');
-const ctx=canvas.getContext('2d');
-const topTextInput=document.getElementById('topText');
-const bottomTextInput=document.getElementById('bottomText');
-const imageLoader=document.getElementById('imageLoader');
-const downloadBtn=document.getElementById('download');
-const textSizeSelect=document.getElementById('textSize');
-let img=new Image();
-img.crossOrigin='anonymous';
-img.onload=drawMeme;
-function drawMeme(){
- ctx.clearRect(0,0,canvas.width,canvas.height);
- const ratio=Math.min(canvas.width/img.width,canvas.height/img.height);
- const w=img.width*ratio;const h=img.height*ratio;
- ctx.drawImage(img,(canvas.width-w)/2,(canvas.height-h)/2,w,h);
- const fontSize=parseInt(textSizeSelect.value);
- ctx.fillStyle='#ffffff';
- ctx.strokeStyle='#000000';
- ctx.lineWidth=fontSize/10;
- ctx.textAlign='center';
- ctx.font=`bold ${fontSize}px Impact, sans-serif`;
- wrapText(topTextInput.value.toUpperCase(),canvas.width/2,fontSize,canvas.width-40,fontSize*1.2,false);
- wrapText(bottomTextInput.value.toUpperCase(),canvas.width/2,canvas.height-fontSize/2,canvas.width-40,fontSize*1.2,true);
-}
-function wrapText(text,x,y,maxWidth,lineHeight,fromBottom){
- const words=text.split(' ');let line='';const lines=[];
- words.forEach((word,i)=>{
-  const test=line+word+' ';const metrics=ctx.measureText(test);
-  if(metrics.width>maxWidth&&i>0){lines.push(line);line=word+' ';}else{line=test;}
- });lines.push(line);
- const startY=fromBottom?y-lineHeight*(lines.length-1):y;
- lines.forEach((l,i)=>{const lineY=startY+i*lineHeight;ctx.fillText(l,x,lineY);ctx.strokeText(l,x,lineY);});
-}
-[topTextInput,bottomTextInput,textSizeSelect].forEach(el=>el.addEventListener('input',drawMeme));
-imageLoader.addEventListener('change',e=>{const reader=new FileReader();reader.onload=ev=>img.src=ev.target.result;reader.readAsDataURL(e.target.files[0]);});
-downloadBtn.addEventListener('click',()=>{const link=document.createElement('a');link.download='verizmus-meme.png';link.href=canvas.toDataURL('image/png');link.click();});
-img.src='https://picsum.photos/1200';
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-0K3WQF5H15');
 </script>
 </body>
 </html>
