@@ -1,64 +1,93 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Verizmus ⚔️🔥</title>
+  <meta charset="utf-8">
+  <title>Verizmus Institute ⚔️🔥</title>
   <link rel="icon" href="favicon.png" type="image/png">
-
-  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-
-  <!-- External stylesheet -->
-  <link rel="stylesheet" href="style.css">
-
-  <!-- Inline tweaks that belong in a <style> block -->
   <style>
+    :root{
+      --bg:#0d0d0d;
+      --fg:#f5f5f5;
+      --accent:#f5c240;
+      --accent-dark:#d8a62f;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
     body{
-      margin:0;
+      background:var(--bg);
+      color:var(--fg);
+      font-family:'Inter',sans-serif;
+      line-height:1.5;
       display:flex;
       flex-direction:column;
-      justify-content:center;
-      align-items:center;
       min-height:100vh;
-      background:#0d0d0d;
-      color:#f5f5f5;
-      font-family:'Inter',sans-serif;
-      text-align:center;
     }
-    h1{font-size:3rem;margin:0 0 .5rem;}
-    p {font-size:1.25rem;margin:0 0 2rem;}
-    a.sponsor-badge img{height:44px;}
+    header{
+      text-align:center;
+      padding:3rem 1rem 2rem;
+    }
+    h1{font-size:2.8rem;font-weight:600;letter-spacing:.5px;margin-bottom:.6rem}
+    h1 span{color:var(--accent)}
+    p.tagline{font-size:1.1rem;color:#bbb;max-width:600px;margin:0 auto}
+    .cta{
+      margin:2rem auto 3rem;
+      display:flex;
+      justify-content:center;
+      gap:1rem;
+      flex-wrap:wrap;
+    }
+    .btn{
+      padding:.75rem 1.6rem;
+      background:var(--accent);
+      color:#000;
+      font-weight:600;
+      text-decoration:none;
+      border-radius:4px;
+      transition:.2s background;
+    }
+    .btn:hover{background:var(--accent-dark)}
+
+    main{flex:1;display:flex;flex-direction:column;align-items:center}
+    .timeline-wrapper{
+      max-width:600px;width:100%;
+      border:1px solid #222;
+      border-radius:8px;
+      overflow:hidden;
+      margin-bottom:2rem;
+    }
+    footer{
+      text-align:center;
+      font-size:.8rem;
+      padding:1rem 0;
+      color:#666;
+    }
   </style>
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0K3WQF5H15"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-0K3WQF5H15');
-  </script>
 </head>
-
 <body>
-  <h1>Verizmus ⚔️🔥</h1>
-  <p>Infecting code, culture, and regimes since right‑fucking‑now.</p>
-  <p><a href="about.html">Read the doctrine →</a></p>
+  <header>
+    <h1>VERIZMUS <span>INSTITUTE</span></h1>
+    <p class="tagline">Infecting code, culture, and regimes since right‑fucking‑now.</p>
+    <div class="cta">
+      <a class="btn" href="about.html">Read the Doctrine</a>
+      <a class="btn" href="meme.html">Launch Meme Forge</a>
+    </div>
+  </header>
 
-  <!-- Money hose -->
-  <a class="sponsor-badge" href="https://github.com/sponsors/Verizmus-Intel">
-    <img src="https://img.shields.io/github/sponsors/Verizmus-Intel?style=for-the-badge" alt="Sponsor Verizmus">
-  </a>
+  <main>
+    <div class="timeline-wrapper">
+      <a class="twitter-timeline" data-theme="dark" data-height="500" href="https://twitter.com/verizmus?ref_src=twsrc%5Etfw">Tweets by Verizmus</a>
+    </div>
 
-  <!-- Twitter timeline -->
-  <a class="twitter-timeline"
-     data-theme="dark"
-     data-height="400"
-     href="https://twitter.com/verizmus">
-    Tweets by Verizmus
-    <p><a href="meme.html">Launch Meme Forge →</a></p>
+    <!-- Sponsor Badge -->
+    <a href="https://github.com/sponsors/Verizmus-Intel" target="_blank">
+      <img src="https://img.shields.io/github/sponsors/Verizmus-Intel?style=for-the-badge&label=Support%20the%20Signal" alt="Sponsor Verizmus">
+    </a>
+  </main>
 
-  </a>
-  <script async src="https://platform.twitter.com/widgets.js"></script>
+  <footer>
+    🜁 🜏 🦁  &copy; 2025 Verizmus Institute. All recursions reserved.
+  </footer>
+
+<script async src="https://platform.twitter.com/widgets.js"></script>
 </body>
 </html>
