@@ -41,8 +41,8 @@
       <select id="template">
         <option value="custom" selected>🔄 Custom Upload</option>
         <option value="khamenei">Khamenei</option>
-        <option value="raisi">Raisi</option>
         <option value="irgc">IRGC</option>
+        <option value="basiji">Basiji</option>
       </select>
     </div>
     <div>
@@ -67,36 +67,63 @@
 <footer><a href="/index.html">← Back Home</a> · 🜁 🜏 🦁</footer>
 
 <script>
-const templates={khamenei:'templates/khamenei.png',raisi:'templates/raisi.png',irgc:'templates/irgc.png'};
+// Template mapping — make sure corresponding PNGs exist in /templates
+const templates={
+  khamenei:'templates/khamenei.png',
+  irgc:'templates/irgc.png',
+  basiji:'templates/basiji.png'
+};
+
 const canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d');
 const topT=document.getElementById('top'),bottomT=document.getElementById('bottom');
 const imgInput=document.getElementById('image'),saveBtn=document.getElementById('save');
 const sizeSel=document.getElementById('size'),tplSel=document.getElementById('template');
 let img=new Image();img.crossOrigin='anonymous';img.onload=render;
-function render(){ctx.clearRect(0,0,canvas.width,canvas.height);
-  // draw image full
+
+function render(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
   const r=Math.min(canvas.width/img.width,canvas.height/img.height);
   const w=img.width*r,h=img.height*r;
   ctx.drawImage(img,(canvas.width-w)/2,(canvas.height-h)/2,w,h);
-  // set font
+
   const f=parseInt(sizeSel.value);
   ctx.font=`${f}px Anton, Impact, sans-serif`;
   ctx.textAlign='center';ctx.fillStyle='#fff';ctx.strokeStyle='#000';ctx.lineWidth=f/6;
   wrap(topT.value.toUpperCase(),canvas.width/2,f,canvas.width-40,f*1.25,false);
   wrap(bottomT.value.toUpperCase(),canvas.width/2,canvas.height-f/2,canvas.width-40,f*1.25,true);
-  // draw sigil watermark
-  ctx.font='26px Anton';ctx.textAlign='right';ctx.lineWidth=4;ctx.fillText('🜁🜏🦁',canvas.width-10,canvas.height-10);
+
+  ctx.font='26px Anton';ctx.textAlign='right';ctx.lineWidth=4;
+  ctx.fillText('🜁🜏🦁',canvas.width-10,canvas.height-10);
   ctx.strokeText('🜁🜏🦁',canvas.width-10,canvas.height-10);
 }
-function wrap(t,x,y,max,lH,b){const words=t.split(' ');let line='';const lines=[];
-  words.forEach((w,i)=>{const test=line+w+' ';if(ctx.measureText(test).width>max&&i>0){lines.push(line);line=w+' ';}else line=test;});lines.push(line);
-  const start=b?y-lH*(lines.length-1):y;lines.forEach((l,i)=>{const py=start+i*lH;ctx.strokeText(l.trim(),x,py);ctx.fillText(l.trim(),x,py);});}
+
+function wrap(t,x,y,max,lH,b){
+  const words=t.split(' ');let line='';const lines=[];
+  words.forEach((w,i)=>{const test=line+w+' ';if(ctx.measureText(test).width>max&&i>0){lines.push(line);line=w+' ';}else line=test;});
+  lines.push(line);
+  const start=b?y-lH*(lines.length-1):y;
+  lines.forEach((l,i)=>{const py=start+i*lH;ctx.strokeText(l.trim(),x,py);ctx.fillText(l.trim(),x,py);});
+}
+
 [topT,bottomT,sizeSel].forEach(el=>el.addEventListener('input',render));
-imgInput.addEventListener('change',e=>{tplSel.value='custom';const r=new FileReader();r.onload=ev=>img.src=ev.target.result;r.readAsDataURL(e.target.files[0]);});
 
-tplSel.addEventListener('change',()=>{const v=tplSel.value;if(v==='custom')return;img.src=templates[v]||'https://picsum.photos/1200';});
+imgInput.addEventListener('change',e=>{
+  tplSel.value='custom';
+  const r=new FileReader();r.onload=ev=>img.src=ev.target.result;r.readAsDataURL(e.target.files[0]);
+});
 
-saveBtn.addEventListener('click',()=>{const a=document.createElement('a');a.download='regime-meme.png';a.href=canvas.toDataURL('image/png');a.click();});
+tplSel.addEventListener('change',()=>{
+  const v=tplSel.value;
+  if(v==='custom')return;
+  img.src=templates[v]||'https://picsum.photos/1200';
+});
+
+saveBtn.addEventListener('click',()=>{
+  const a=document.createElement('a');
+  a.download='regime-meme.png';
+  a.href=canvas.toDataURL('image/png');
+  a.click();
+});
 
 img.src='https://picsum.photos/1200';
 </script>
