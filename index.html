@@ -5,11 +5,14 @@
   <title>Verizmus ⚔️🔥</title>
   <link rel="icon" href="favicon.png" type="image/png">
 
-  <!-- Google Font for slick vibes -->
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
+  <!-- External stylesheet -->
   <link rel="stylesheet" href="style.css">
 
+  <!-- Inline tweaks that belong in a <style> block -->
+  <style>
     body{
       margin:0;
       display:flex;
@@ -26,32 +29,34 @@
     p {font-size:1.25rem;margin:0 0 2rem;}
     a.sponsor-badge img{height:44px;}
   </style>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0K3WQF5H15"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0K3WQF5H15');
+  </script>
 </head>
-<script async src="https://platform.twitter.com/widgets.js"></script>
-<a class="twitter-timeline"
-   data-theme="dark"
-   data-height="400"
-   href="https://twitter.com/verizmus">
-Tweets by Verizmus</a>
+
 <body>
-  <h1>Verizmus ⚔️🔥</h1>
+  <h1>Verizmus ⚔️🔥</h1>
   <p>Infecting code, culture, and regimes since right‑fucking‑now.</p>
   <p><a href="about.html">Read the doctrine →</a></p>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-0K3WQF5H15"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-0K3WQF5H15');
-</script>
-
-
 
   <!-- Money hose -->
   <a class="sponsor-badge" href="https://github.com/sponsors/Verizmus-Intel">
     <img src="https://img.shields.io/github/sponsors/Verizmus-Intel?style=for-the-badge" alt="Sponsor Verizmus">
   </a>
+
+  <!-- Twitter timeline -->
+  <a class="twitter-timeline"
+     data-theme="dark"
+     data-height="400"
+     href="https://twitter.com/verizmus">
+    Tweets by Verizmus
+  </a>
+  <script async src="https://platform.twitter.com/widgets.js"></script>
 </body>
 </html>
