@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Verizmus Meme Forge 🜁🜏🦁</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:100vh;background:#0d0d0d;color:#f5f5f5;font-family:'Inter',sans-serif;text-align:center}
+    h1{font-size:2.5rem;margin:0 0 1rem;font-weight:600}
+    canvas{border:2px solid #f5c240;max-width:100%;height:auto;margin-bottom:1rem}
+    label{display:block;margin:.25rem 0;font-size:.9rem}
+    input[type="text"],input[type="file"]{padding:.4rem .6rem;border:none;border-radius:4px;margin:.25rem 0;width:260px;max-width:90%}
+    button{padding:.6rem 1.4rem;margin-top:1rem;background:#f5c240;border:none;border-radius:4px;color:#0d0d0d;font-weight:600;cursor:pointer}
+  </style>
+</head>
+<body>
+  <h1>Verizmus Meme Forge</h1>
+  <canvas id="canvas" width="600" height="600"></canvas>
+  <label>Top Text
+    <input id="topText" type="text" placeholder="Top text">
+  </label>
+  <label>Bottom Text
+    <input id="bottomText" type="text" placeholder="Bottom text">
+  </label>
+  <input type="file" id="imageLoader" accept="image/*">
+  <button id="download">Download Meme</button>
+
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const topTextInput = document.getElementById('topText');
+const bottomTextInput = document.getElementById('bottomText');
+const imageLoader = document.getElementById('imageLoader');
+const downloadBtn   = document.getElementById('download');
+
+let img = new Image();
+img.crossOrigin = 'anonymous';
+img.onload = drawMeme;
+
+function drawMeme(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  // fit image
+  const ratio = Math.min(canvas.width/img.width, canvas.height/img.height);
+  const w = img.width * ratio;
+  const h = img.height * ratio;
+  ctx.drawImage(img,(canvas.width-w)/2,(canvas.height-h)/2,w,h);
+
+  ctx.fillStyle = '#ffffff';
+  ctx.strokeStyle = '#000000';
+  ctx.lineWidth = 3;
+  ctx.textAlign = 'center';
+  ctx.font = 'bold 40px Impact, sans-serif';
+
+  wrapText(topTextInput.value.toUpperCase(), canvas.width/2, 10, canvas.width-20, 44, false);
+  wrapText(bottomTextInput.value.toUpperCase(), canvas.width/2, canvas.height-10, canvas.width-20, 44, true);
+}
+
+function wrapText(text,x,y,maxWidth,lineHeight,fromBottom){
+  const words = text.split(' ');
+  let line = '';
+  const lines = [];
+  for(let n=0;n<words.length;n++){
+    const testLine = line + words[n] + ' ';
+    const metrics = ctx.measureText(testLine);
+    if(metrics.width > maxWidth && n > 0){
+      lines.push(line);
+      line = words[n] + ' ';
+    } else {
+      line = testLine;
+    }
+  }
+  lines.push(line);
+  const startY = fromBottom ? y - lineHeight * (lines.length-1) : y;
+  lines.forEach((l,i)=>{
+    const lineY = startY + (fromBottom? i*lineHeight : i*lineHeight);
+    ctx.fillText(l,x,lineY);
+    ctx.strokeText(l,x,lineY);
+  });
+}
+
+topTextInput.addEventListener('input',drawMeme);
+bottomTextInput.addEventListener('input',drawMeme);
+
+imageLoader.addEventListener('change',e=>{
+  const reader = new FileReader();
+  reader.onload = ev => { img.src = ev.target.result; };
+  reader.readAsDataURL(e.target.files[0]);
+});
+
+downloadBtn.addEventListener('click',()=>{
+  const link = document.createElement('a');
+  link.download = 'verizmus-meme.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+});
+
+// default placeholder image
+img.src = 'https://picsum.photos/800';
+</script>
+</body>
+</html>
