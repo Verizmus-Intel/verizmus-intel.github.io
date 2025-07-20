@@ -99,6 +99,11 @@
       color: #666;
       text-align: center;
     }
+    .error {
+      color: var(--accent);
+      font-size: 0.9rem;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -109,7 +114,7 @@
 
 <section class="generator">
   <canvas id="canvas" width="1024" height="1024"></canvas>
-
+  <div id="error" class="error"></div>
   <div class="controls">
     <div>
       <label for="template">Template</label>
@@ -145,60 +150,135 @@
 <footer><a href="/index.html">← Back Home</a> · 🜁 🜏 🦁</footer>
 
 <script>
-const templates={khamenei:'templates/khamenei.png',irgc:'templates/irgc.png',basiji:'templates/basiji.png'};
-const canvas=document.getElementById('canvas');
-const ctx=canvas.getContext('2d');
-const topText=document.getElementById('top');
-const bottomText=document.getElementById('bottom');
-const imgInput=document.getElementById('image');
-const sizeSelect=document.getElementById('size');
-const templateSelect=document.getElementById('template');
+const templates = {
+  khamenei: 'https://via.placeholder.com/1024?text=Khamenei', // Replace with actual path
+  irgc: 'https://via.placeholder.com/1024?text=IRGC', // Replace with actual path
+  basiji: 'https://via.placeholder.com/1024?text=Basiji' // Replace with actual path
+};
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const topText = document.getElementById('top');
+const bottomText = document.getElementById('bottom');
+const imgInput = document.getElementById('image');
+const sizeSelect = document.getElementById('size');
+const templateSelect = document.getElementById('template');
+const errorDiv = document.getElementById('error');
 
-let image=new Image();
-image.crossOrigin='anonymous';
-image.onload=drawMeme;
+let image = new Image();
+image.crossOrigin = 'anonymous';
 
-function drawMeme(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  const ratio=Math.min(canvas.width/image.width,canvas.height/image.height);
-  const w=image.width*ratio,h=image.height*ratio;
-  ctx.drawImage(image,(canvas.width-w)/2,(canvas.height-h)/2,w,h);
-
-  const fontSize=parseInt(sizeSelect.value);
-  ctx.font=`bold ${fontSize}px Anton, sans-serif`;
-  ctx.textAlign='center';ctx.strokeStyle='#000';ctx.fillStyle='#fff';ctx.lineWidth=fontSize/4;
-
-  wrapText(topText.value.toUpperCase(),canvas.width/2,fontSize*1.2);
-  wrapText(bottomText.value.toUpperCase(),canvas.width/2,canvas.height-fontSize/2);
-
-  ctx.font='28px Anton';ctx.fillText('🜁🜏🦁',canvas.width-15,canvas.height-15);
+function showError(message) {
+  errorDiv.textContent = message;
 }
 
-function wrapText(text,x,y){
-  const lines=[];const words=text.split(' ');let line='';
-  words.forEach((word)=>{
-    const testLine=line+word+' ';
-    if(ctx.measureText(testLine).width>canvas.width-40){lines.push(line);line=word+' ';}
-    else{line=testLine;}
-  });lines.push(line);
-  lines.forEach((line,i)=>{
-    ctx.strokeText(line,x,y+i*parseInt(sizeSelect.value)*1.2);
-    ctx.fillText(line,x,y+i*parseInt(sizeSelect.value)*1.2);
+function clearError() {
+  errorDiv.textContent = '';
+}
+
+function drawMeme() {
+  clearError();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Draw image if loaded
+  if (image.complete && image.naturalWidth !== 0) {
+    const ratio = Math.min(canvas.width / image.width, canvas.height / image.height);
+    const w = image.width * ratio;
+    const h = image.height * ratio;
+    ctx.drawImage(image, (canvas.width - w) / 2, (canvas.height - h) / 2, w, h);
+  } else {
+    showError('Image failed to load. Try another image or template.');
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  // Draw text
+  const fontSize = parseInt(sizeSelect.value);
+  ctx.font = `bold ${fontSize}px Anton, sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.strokeStyle = '#000';
+  ctx.fillStyle = '#fff';
+  ctx.lineWidth = fontSize / 4;
+
+  wrapText(topText.value.toUpperCase(), canvas.width / 2, fontSize * 1.2);
+  wrapText(bottomText.value.toUpperCase(), canvas.width / 2, canvas.height - fontSize / 2);
+
+  ctx.font = '28px Anton';
+  ctx.fillText('🜁🜏🦁', canvas.width - 15, canvas.height - 15);
+}
+
+function wrapText(text, x, y) {
+  const lines = [];
+  const words = text.split(' ');
+  let line = '';
+  words.forEach(word => {
+    const testLine = line + word + ' ';
+    if (ctx.measureText(testLine).width > canvas.width - 40) {
+      lines.push(line);
+      line = word + ' ';
+    } else {
+      line = testLine;
+    }
+  });
+  lines.push(line);
+  lines.forEach((line, i) => {
+    ctx.strokeText(line, x, y + i * parseInt(sizeSelect.value) * 1.2);
+    ctx.fillText(line, x, y + i * parseInt(sizeSelect.value) * 1.2);
   });
 }
 
-document.getElementById('download').onclick=()=>{
-  const link=document.createElement('a');link.href=canvas.toDataURL();link.download='meme.png';link.click();};
+function loadImage(src) {
+  clearError();
+  image = new Image();
+  image.crossOrigin = 'anonymous';
+  image.onload = () => {
+    clearError();
+    drawMeme();
+  };
+  image.onerror = () => {
+    showError('Failed to load image. Check template path or upload a valid image.');
+    drawMeme(); // Draw with placeholder or text only
+  };
+  image.src = src;
+}
 
-[templateSelect,imgInput,topText,bottomText,sizeSelect].forEach(e=>e.oninput=()=>{
-  if(templateSelect.value!=='custom')image.src=templates[templateSelect.value];});
-
-imgInput.onchange=e=>{
-  templateSelect.value='custom';const reader=new FileReader();reader.onload=()=>image.src=reader.result;
-  reader.readAsDataURL(e.target.files[0]);
+// Event listeners
+templateSelect.onchange = () => {
+  if (templateSelect.value !== 'custom') {
+    loadImage(templates[templateSelect.value]);
+  } else {
+    imgInput.value = ''; // Clear file input
+    loadImage('https://via.placeholder.com/1024?text=Custom+Image');
+  }
 };
 
-image.src='https://picsum.photos/1200';
+imgInput.onchange = (e) => {
+  templateSelect.value = 'custom';
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => loadImage(reader.result);
+    reader.onerror = () => showError('Failed to read uploaded image.');
+    reader.readAsDataURL(file);
+  } else {
+    showError('No file selected.');
+  }
+};
+
+[topText, bottomText, sizeSelect].forEach(e => e.oninput = drawMeme);
+
+document.getElementById('download').onclick = () => {
+  try {
+    const link = document.createElement('a');
+    link.href = canvas.toDataURL('image/png');
+    link.download = 'meme.png';
+    link.click();
+  } catch (err) {
+    showError('Download failed. Ensure image is from a CORS-enabled source.');
+  }
+};
+
+// Initialize
+loadImage('https://via.placeholder.com/1024?text=Start+Here');
 </script>
 </body>
 </html>
